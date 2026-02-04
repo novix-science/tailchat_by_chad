@@ -1,12 +1,15 @@
 .dark {
   .bytemd {
-    @apply bg-gray-500 text-white border-white border-opacity-20;
+    background-color: #6b7280; // bg-gray-500
+    color: #ffffff; // text-white
+    border-color: rgba(255, 255, 255, 0.2); // border-white border-opacity-20
 
     .bytemd-toolbar {
-      @apply bg-gray-600 border-white border-opacity-20;
+      background-color: #4b5563; // bg-gray-600
+      border-color: rgba(255, 255, 255, 0.2); // border-white border-opacity-20
 
       .bytemd-toolbar-icon:hover {
-        @apply bg-black bg-opacity-40;
+        background-color: rgba(0, 0, 0, 0.4); // bg-black bg-opacity-40
       }
 
       .bytemd-toolbar-right [bytemd-tippy-path='5'] {
@@ -18,20 +21,21 @@
     .bytemd-body {
       .bytemd-preview,
       .bytemd-sidebar {
-        @apply border-white border-opacity-20;
+        border-color: rgba(255, 255, 255, 0.2); // border-white border-opacity-20
       }
 
       .bytemd-editor .CodeMirror {
-        @apply bg-gray-500 text-white;
+        background-color: #6b7280; // bg-gray-500
+        color: #ffffff; // text-white
       }
 
       .bytemd-sidebar ul {
-        @apply text-gray-100;
+        color: #f3f4f6; // text-gray-100
       }
     }
 
     .bytemd-status {
-      @apply border-white border-opacity-20;
+      border-color: rgba(255, 255, 255, 0.2); // border-white border-opacity-20
     }
 
     // 以下是代码编辑器配色

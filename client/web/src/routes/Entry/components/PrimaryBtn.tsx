@@ -13,9 +13,20 @@ export const PrimaryBtn: React.FC<
       disabled={props.loading}
       {..._omit(props, ['loading'])}
       className={clsx(
-        'w-full py-2 px-4 mb-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50',
+        'w-full mb-3 border-none focus:outline-none disabled:opacity-50 cursor-pointer',
         props.className
       )}
+      style={{
+        backgroundColor: '#FF6B35',
+        color: '#FFFFFF',
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 13,
+        fontWeight: 600,
+        borderRadius: 4,
+        padding: '14px 24px',
+        letterSpacing: 1,
+        ...props.style,
+      }}
     >
       {props.loading && <Spinner />}
       {props.children}

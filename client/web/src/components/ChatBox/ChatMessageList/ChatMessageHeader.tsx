@@ -6,12 +6,30 @@ export const ChatMessageHeader: React.FC<{
   title: React.ReactNode;
 }> = React.memo((props) => {
   return (
-    <div className="px-5 pb-4 pt-8">
-      <div className="font-extrabold mb-2 text-2xl flex items-center space-x-1">
-        <Icon icon="mdi:pound" />
+    <div style={{ padding: '32px 24px 16px' }}>
+      <div
+        className="flex items-center"
+        style={{
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: 20,
+          fontWeight: 700,
+          color: '#FFFFFF',
+          letterSpacing: 2,
+          textTransform: 'uppercase',
+          marginBottom: 8,
+          gap: 8,
+        }}
+      >
+        <Icon icon="mdi:pound" style={{ color: '#666666' }} />
         <div>{props.title}</div>
       </div>
-      <div className="text-base opacity-80">
+      <div
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 12,
+          color: '#666666',
+        }}
+      >
         {t('这里是所有消息的开始，请畅所欲言。')}
       </div>
     </div>

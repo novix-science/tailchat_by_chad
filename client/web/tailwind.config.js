@@ -192,25 +192,46 @@ module.exports = {
       desktop: { min: '640px' }, // alias
     },
     extend: {
+      fontFamily: {
+        heading: ['Oswald', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
       colors: {
         inherit: {
           DEFAULT: 'inherit',
         },
         navbar: {
           light: colors.coolGray[300],
-          dark: colors.coolGray[900],
+          dark: '#0D0D0D',
         },
         sidebar: {
           light: colors.coolGray[200],
-          dark: colors.coolGray[800],
+          dark: '#0D0D0D',
         },
         content: {
           light: colors.coolGray[100],
-          dark: colors.coolGray[700],
+          dark: '#1A1A1A',
         },
         typography: {
           light: colors.coolGray[700],
-          dark: 'rgba(255, 255, 255, 0.85)',
+          dark: '#FFFFFF',
+        },
+        accent: {
+          DEFAULT: '#FF6B35',
+          hover: '#E07850',
+        },
+        'mc-border': {
+          DEFAULT: '#3D3D3D',
+        },
+        'mc-bg': {
+          primary: '#0D0D0D',
+          secondary: '#1A1A1A',
+          tertiary: '#2D2D2D',
+        },
+        'mc-text': {
+          primary: '#FFFFFF',
+          secondary: '#666666',
+          muted: '#444444',
         },
       },
       borderRadius: {

@@ -19,11 +19,14 @@
   }
 
   code {
-    @apply px-2 py-1 bg-black bg-opacity-20 rounded;
+    padding: 0.25rem 0.5rem; // px-2 py-1
+    background-color: rgba(0, 0, 0, 0.2); // bg-black bg-opacity-20
+    border-radius: 0.25rem; // rounded
   }
 
   p {
-    @apply my-2;
+    margin-top: 0.5rem; // my-2
+    margin-bottom: 0.5rem;
   }
 
   a {
@@ -40,7 +43,12 @@
   }
 
   blockquote {
-    @apply px-2 text-gray-500 border-l-4 border-gray-500;
+    padding-left: 0.5rem; // px-2
+    padding-right: 0.5rem;
+    color: #6b7280; // text-gray-500
+    border-left-width: 4px; // border-l-4
+    border-left-style: solid;
+    border-left-color: #6b7280; // border-gray-500
   }
 
   table {
@@ -51,14 +59,16 @@
     overflow: auto;
 
     tr {
-      @apply border-t border-gray-200 bg-transparent;
+      border-top: 1px solid #e5e7eb; // border-t border-gray-200
+      background-color: transparent; // bg-transparent
 
       &:nth-child(2n) {
-        @apply bg-gray-50 bg-opacity-10;
+        background-color: rgba(249, 250, 251, 0.1); // bg-gray-50 bg-opacity-10
       }
 
       th, td {
-        @apply border border-gray-200 py-1 px-3;
+        border: 1px solid #e5e7eb; // border border-gray-200
+        padding: 0.25rem 0.75rem; // py-1 px-3
       }
     }
 

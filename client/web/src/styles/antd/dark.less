@@ -1,7 +1,7 @@
 .dark {
-  --antd-primary-border: #165996;
-  --antd-primary-color: #177ddc;
-  --antd-primary-color-hover: #095cb5;
+  --antd-primary-border: #FF6B35;
+  --antd-primary-color: #FF6B35;
+  --antd-primary-color-hover: #E07850;
   --antd-primary-dangerous-color: #a61d24;
   --antd-primary-dangerous-color-hover: #800f19;
 
@@ -129,20 +129,21 @@
 
   // 输入框
   .ant-input {
-    color: rgba(255, 255, 255, 0.85);
-    background-color: transparent;
-    border-color: rgba(255, 255, 255, 0.12);
+    color: #FFFFFF;
+    background-color: #0D0D0D;
+    border-color: #3D3D3D;
+    font-family: 'JetBrains Mono', monospace;
 
     &:hover {
-      border-color: #165996;
+      border-color: #FF6B35;
       border-right-width: 1px !important;
     }
 
     &:focus,
     &.ant-input-focused {
-      border-color: #177ddc;
+      border-color: #FF6B35;
       border-right-width: 1px !important;
-      box-shadow: 0 0 0 2px rgb(23 125 220 / 20%);
+      box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
     }
 
     &.border-0 {
@@ -191,10 +192,12 @@
   // 下拉菜单
   .ant-dropdown,
   .ant-dropdown-menu-submenu {
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.85);
 
     .ant-dropdown-menu {
-      background-color: #1f1f1f;
+      background-color: #1A1A1A;
+      border: 1px solid #3D3D3D;
+      border-radius: 6px;
 
       .ant-dropdown-menu-item,
       .ant-dropdown-menu-submenu-title {
@@ -319,10 +322,12 @@
   // Modal
   .ant-modal {
     .ant-modal-content {
-      background-color: #222222;
+      background-color: #1A1A1A;
+      border: 1px solid #3D3D3D;
+      border-radius: 8px;
 
       .ant-modal-confirm-content {
-        @apply text-typography-dark;
+        color: #FFFFFF; // text-typography-dark
       }
     }
   }

@@ -92,10 +92,11 @@ export const ChatInputAddon: React.FC = React.memo(() => {
     >
       <div>
         <Icon
-          className={clsx('text-2xl cursor-pointer transition transform', {
+          className={clsx('cursor-pointer transition transform', {
             'rotate-45': open,
           })}
-          icon="mdi:plus-circle-outline"
+          style={{ fontSize: 18, color: '#666666' }}
+          icon="mdi:paperclip"
         />
       </div>
     </Dropdown>

@@ -55,8 +55,8 @@ const GroupNavItem: React.FC<{ group: GroupInfo }> = React.memo(({ group }) => {
           }}
         >
           <Avatar
-            shape="square"
-            size={48}
+            shape="circle"
+            size={44}
             name={group.name}
             src={group.avatar}
           />
@@ -133,12 +133,15 @@ export const GroupNav: React.FC = React.memo(() => {
 
       {!disableCreateGroup && (
         <NavbarNavItem
-          className="bg-green-500"
           name={t('创建群组')}
           onClick={handleCreateGroup}
           data-testid="create-group"
         >
-          <Icon className="text-3xl text-white" icon="mdi:plus" />
+          <Icon
+            className="text-xl"
+            style={{ color: '#666666' }}
+            icon="mdi:plus"
+          />
         </NavbarNavItem>
       )}
 

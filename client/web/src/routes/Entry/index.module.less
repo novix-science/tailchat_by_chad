@@ -1,3 +1,16 @@
 .entryLeft {
-  box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(135deg, #0D0D0D 0%, #1A1008 60%, #2A1A0A 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 120px;
+    background: linear-gradient(to right, transparent, rgba(255, 107, 53, 0.08));
+    pointer-events: none;
+  }
 }

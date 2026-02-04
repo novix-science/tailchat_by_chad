@@ -1,4 +1,4 @@
-import { Badge, BadgeProps, Space, Typography } from 'antd';
+import { Badge, BadgeProps, Space } from 'antd';
 import clsx from 'clsx';
 import React from 'react';
 import { useLocation } from 'react-router';
@@ -12,7 +12,7 @@ export const GroupPanelItem: React.FC<{
   name: string;
   icon: React.ReactNode;
   to: string;
-  dimmed?: boolean; // 颜色暗淡
+  dimmed?: boolean;
   badge?: boolean;
   badgeProps?: BadgeProps;
   extraBadge?: React.ReactNode[];
@@ -22,29 +22,43 @@ export const GroupPanelItem: React.FC<{
   const isActive = location.pathname.startsWith(to);
 
   return (
-    <Link className="block" to={to}>
+    <Link className="block" to={to} style={{ textDecoration: 'none' }}>
       <div
-        className={clsx(
-          'w-full hover:bg-black hover:bg-opacity-20 dark:hover:bg-white dark:hover:bg-opacity-20 cursor-pointer text-gray-900 dark:text-white rounded px-1 h-8 flex items-center text-base group',
-          {
-            'bg-black bg-opacity-20 dark:bg-white dark:bg-opacity-20': isActive,
-          },
-          dimmed && 'text-opacity-40 dark:text-opacity-40'
-        )}
+        className={clsx('w-full cursor-pointer flex items-center group')}
+        style={{
+          padding: '6px 8px',
+          borderRadius: 4,
+          backgroundColor: isActive ? '#2D2D2D' : 'transparent',
+          color: isActive
+            ? '#FFFFFF'
+            : dimmed
+            ? 'rgba(102,102,102,0.4)'
+            : '#666666',
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 13,
+          height: 32,
+          transition: 'background-color 0.2s',
+        }}
       >
-        <div className={clsx('flex items-center justify-center px-1 mr-1')}>
+        <div
+          className="flex items-center justify-center"
+          style={{ marginRight: 8, color: isActive ? '#FFFFFF' : '#666666' }}
+        >
           {icon}
         </div>
 
-        <Typography.Text
-          className={clsx(
-            'flex-1 text-gray-900 dark:text-white',
-            dimmed && 'text-opacity-40 dark:text-opacity-40'
-          )}
-          ellipsis={true}
+        <span
+          className="flex-1 truncate"
+          style={{
+            color: isActive
+              ? '#FFFFFF'
+              : dimmed
+              ? 'rgba(102,102,102,0.4)'
+              : '#CCCCCC',
+          }}
         >
           {name}
-        </Typography.Text>
+        </span>
 
         <Space>
           {badge === true && <Badge status="error" {...props.badgeProps} />}

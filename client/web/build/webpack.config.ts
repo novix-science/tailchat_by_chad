@@ -188,6 +188,33 @@ const config: Configuration = {
     client: {
       overlay: false,
     },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:11000',
+        changeOrigin: true,
+      },
+      '/socket.io': {
+        target: 'http://localhost:11000',
+        changeOrigin: true,
+        ws: true,
+      },
+      '/upload': {
+        target: 'http://localhost:11000',
+        changeOrigin: true,
+      },
+      '/static': {
+        target: 'http://localhost:11000',
+        changeOrigin: true,
+      },
+      '/health': {
+        target: 'http://localhost:11000',
+        changeOrigin: true,
+      },
+      '/open': {
+        target: 'http://localhost:11000',
+        changeOrigin: true,
+      },
+    },
   },
   module: {
     rules: [

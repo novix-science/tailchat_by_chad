@@ -7,9 +7,19 @@ export const SecondaryBtn: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> =
       <button
         {...props}
         className={clsx(
-          'w-full py-2 px-4 border border-transparent text-sm font-medium text-white focus:outline-none disabled:opacity-50',
+          'w-full focus:outline-none disabled:opacity-50 cursor-pointer',
           props.className
         )}
+        style={{
+          backgroundColor: 'transparent',
+          border: '1px solid #3D3D3D',
+          borderRadius: 4,
+          color: '#666666',
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 12,
+          padding: '12px 24px',
+          ...props.style,
+        }}
       >
         {props.children}
       </button>

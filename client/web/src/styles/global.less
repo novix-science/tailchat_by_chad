@@ -8,7 +8,8 @@ body {
 }
 
 #tailchat-app {
-  @apply text-typography-light bg-content-light;
+  color: #374151; // text-typography-light (coolGray-700)
+  background-color: #f3f4f6; // bg-content-light (coolGray-100)
 
   --tc-background-image: url(../../assets/images/bg.webp);
   --tc-content-background-image: '';
@@ -16,12 +17,23 @@ body {
   --tc-content-background-color: rgba(243, 244, 246, 1); // copy from bg-content-light
 
   .tc-background {
-    @apply bg-center bg-cover bg-no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-image: var(--tc-background-image);
   }
 
   .tc-content-background {
-    @apply absolute block inset-0 bg-contain bg-no-repeat bg-right-bottom pointer-events-none;
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    pointer-events: none;
     background-image: var(--tc-content-background-image);
     opacity: var(--tc-content-background-image-opacity);
   }
@@ -47,7 +59,7 @@ body {
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-black bg-opacity-10;
+    background-color: rgba(0, 0, 0, 0.1);
     border-color: transparent;
     background-clip: padding-box;
     border-width: 4px;
@@ -55,12 +67,12 @@ body {
     border-radius: 8px;
 
     &:hover {
-      @apply bg-black bg-opacity-20;
+      background-color: rgba(0, 0, 0, 0.2);
     }
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-black bg-opacity-5;
+    background-color: rgba(0, 0, 0, 0.05);
     border-color: transparent;
     background-clip: padding-box;
     border-width: 4px;
@@ -70,11 +82,13 @@ body {
 
   // 深色模式覆盖
   &.dark {
-    @apply text-typography-dark bg-content-dark;
-    --tc-content-background-color: rgba(55, 65, 81, 1);; // copy from bg-content-light
+    color: #FFFFFF; // text-typography-dark
+    background-color: #1A1A1A;
+    --tc-content-background-color: #1A1A1A;
 
     h1,h2,h3,h4,h5,h6 {
-      @apply text-typography-dark;
+      color: #FFFFFF;
+      font-family: 'Oswald', sans-serif;
     }
 
     ::-webkit-scrollbar-corner {
@@ -82,15 +96,17 @@ body {
     }
 
     ::-webkit-scrollbar-thumb {
-      background-color: #202225;
+      background-color: #2D2D2D;
+      border-color: transparent;
 
       &:hover {
-        background-color: #202225;
+        background-color: #3D3D3D;
       }
     }
 
     ::-webkit-scrollbar-track {
-      background-color: #2f3136;
+      background-color: #1A1A1A;
+      border-color: transparent;
     }
   }
 }

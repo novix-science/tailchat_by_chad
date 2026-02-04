@@ -1,33 +1,49 @@
 .chatbox-mention-input {
-  @apply shadow-none border-0 px-4 py-2 relative;
+  box-shadow: none;
+  border: 0;
+  padding: 0.5rem 1rem;
+  position: relative;
 
   &__control {
-    @apply relative;
+    position: relative;
   }
 
   &__input {
-    @apply outline-none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    color: #FFFFFF !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+
+    &::placeholder {
+      color: #444444 !important;
+    }
   }
 
   &__highlighter--singleLine {
-    @apply whitespace-nowrap h-6 !important;
+    white-space: nowrap !important;
+    height: 1.5rem !important;
   }
 
   &__suggestions {
-    @apply bg-transparent !important;
+    background-color: transparent !important;
 
     &__list {
-      @apply border border-gray-500 bg-content-light dark:bg-content-dark rounded overflow-auto absolute;
+      border: 1px solid #3D3D3D;
+      background-color: #1A1A1A;
+      border-radius: 6px;
+      overflow: auto;
+      position: absolute;
       max-height: 60vh;
       min-width: 240px;
       bottom: 14px;
     }
 
     &__item {
-      @apply rounded;
+      border-radius: 4px;
 
       &--focused {
-        @apply bg-black bg-opacity-20 dark:bg-white dark:bg-opacity-20;
+        background-color: #2D2D2D;
       }
     }
   }

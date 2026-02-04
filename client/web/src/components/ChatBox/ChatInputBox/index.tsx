@@ -120,8 +120,22 @@ export const ChatInputBox: React.FC<ChatInputBoxProps> = React.memo((props) => {
         appendMsg,
       }}
     >
-      <div className="px-4 py-2">
-        <div className="bg-white dark:bg-gray-600 flex rounded-md items-center relative">
+      <div style={{ padding: '12px 24px', borderTop: '1px solid #3D3D3D' }}>
+        <div
+          className="flex items-center relative"
+          style={{
+            backgroundColor: '#0D0D0D',
+            border: '1px solid #3D3D3D',
+            borderRadius: 6,
+            minHeight: 40,
+          }}
+        >
+          {!disabled && (
+            <div className="flex items-center" style={{ paddingLeft: 12 }}>
+              <ChatInputAddon />
+            </div>
+          )}
+
           {/* This w-0 is magic to ensure show mention and long text */}
           <div className="flex-1 w-0">
             <ChatInputBoxInput
@@ -139,7 +153,10 @@ export const ChatInputBox: React.FC<ChatInputBoxProps> = React.memo((props) => {
           {pasteHandlerContainer}
 
           {!disabled && (
-            <div className="px-2 flex space-x-1">
+            <div
+              className="flex items-center"
+              style={{ paddingRight: 12, gap: 8 }}
+            >
               {pluginChatInputButtons.map((item, i) =>
                 React.cloneElement(item.render(), {
                   key: `plugin-chatinput-btn#${i}`,
@@ -148,14 +165,13 @@ export const ChatInputBox: React.FC<ChatInputBoxProps> = React.memo((props) => {
 
               <ChatInputEmotion />
 
-              {message ? (
+              {message && (
                 <Icon
-                  icon="mdi:send-circle-outline"
-                  className="text-2xl cursor-pointer"
+                  icon="mdi:send"
+                  className="cursor-pointer"
+                  style={{ fontSize: 18, color: '#FF6B35' }}
                   onClick={handleSendMsg}
                 />
-              ) : (
-                <ChatInputAddon />
               )}
             </div>
           )}

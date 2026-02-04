@@ -13,7 +13,17 @@ export const SectionHeader: React.FC<SectionHeaderProps> = React.memo(
     const [visible, setVisible] = useState(false);
 
     return (
-      <div className="h-12 relative flex items-center py-0 text-base font-bold flex-shrink-0 thin-line-bottom">
+      <div
+        className="relative flex items-center py-0 font-bold flex-shrink-0"
+        style={{
+          height: 52,
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: 18,
+          fontWeight: 600,
+          borderBottom: '1px solid #3D3D3D',
+          color: '#FFFFFF',
+        }}
+      >
         {props.menu ? (
           <Dropdown
             className="overflow-hidden"

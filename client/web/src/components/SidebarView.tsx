@@ -34,14 +34,20 @@ const SidebarViewMenuItemTitle: React.FC<
   }>
 > = (props) => (
   <div
-    className={clsx(
-      'rounded-sm px-1.5 py-2.5 mb-1 text-gray-700 dark:text-gray-300 cursor-pointer  hover:bg-black hover:bg-opacity-10 hover:text-gray-800 dark:hover:text-gray-200',
-      {
-        'bg-black bg-opacity-10 text-gray-900 dark:text-white': props.active,
-        'text-red-500': props.isDanger,
-      }
-    )}
-    style={{ width: 192, lineHeight: '20px' }}
+    className="cursor-pointer"
+    style={{
+      width: 192,
+      padding: '8px 12px',
+      marginBottom: 2,
+      borderRadius: 4,
+      fontFamily: 'JetBrains Mono, monospace',
+      fontSize: 13,
+      color: props.isDanger ? '#FF4444' : props.active ? '#FF6B35' : '#666666',
+      backgroundColor: props.active
+        ? 'rgba(255, 107, 53, 0.08)'
+        : 'transparent',
+      transition: 'all 0.2s',
+    }}
     onClick={props.onClick}
   >
     {props.children}
@@ -81,9 +87,18 @@ const SidebarViewMenuItem: React.FC<SidebarViewMenuProps> = React.memo(
 
     if (menu.type === 'group') {
       return (
-        <div className="pb-2.5 mb-2.5 border-b last:border-0">
-          <div className="px-1.5 py-2.5 pt-0 text-xs font-bold uppercase">
-            {menu.title}
+        <div style={{ paddingBottom: 16, marginBottom: 16 }}>
+          <div
+            style={{
+              padding: '0 12px 8px',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 10,
+              color: '#444444',
+              letterSpacing: 1,
+              textTransform: 'uppercase',
+            }}
+          >
+            {'// ' + menu.title}
           </div>
           <div>
             {menu.children.map((sub, i) => (
@@ -148,8 +163,12 @@ export const SidebarView: React.FC<SidebarViewProps> = React.memo((props) => {
     <SidebarViewContext.Provider value={{ content, setContent }}>
       <div className="flex w-full h-full mobile:flex-col mobile:overflow-auto">
         <div
-          className="bg-black bg-opacity-10 flex flex-col justify-start items-end py-20 px-2.5 mobile:items-start mobile:py-10 text-sm"
-          style={{ flex: '1 0 218px' }}
+          className="flex flex-col justify-start items-end py-20 px-2.5 mobile:items-start mobile:py-10 text-sm"
+          style={{
+            flex: '1 0 240px',
+            backgroundColor: '#0D0D0D',
+            borderRight: '1px solid #3D3D3D',
+          }}
         >
           {menu.map((item, i) => (
             <SidebarViewMenuItem key={i} menu={item} />
@@ -158,7 +177,10 @@ export const SidebarView: React.FC<SidebarViewProps> = React.memo((props) => {
 
         <div
           className="pt-24 pb-20 px-10 mobile:pt-10 mobile:px-2 desktop:overflow-auto"
-          style={{ flex: '1 1 800px' }}
+          style={{
+            flex: '1 1 800px',
+            backgroundColor: '#1A1A1A',
+          }}
         >
           {content}
         </div>

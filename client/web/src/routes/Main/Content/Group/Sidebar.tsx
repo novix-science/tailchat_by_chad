@@ -18,7 +18,7 @@ export const Sidebar: React.FC = React.memo(() => {
     <CommonSidebarWrapper data-tc-role="sidebar-group">
       <GroupHeader groupId={groupId} />
 
-      <div className="p-2 space-y-1 overflow-auto">
+      <div className="p-2 space-y-1 overflow-auto flex-1">
         {groupPanels
           .filter((panel) => !isValidStr(panel.parentId))
           .map((panel) =>

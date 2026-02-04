@@ -32,7 +32,11 @@ export const BaseChatInputButton: React.FC<BaseChatInputButtonProps> =
         placement="topRight"
         trigger={['click']}
       >
-        <Icon className="text-2xl cursor-pointer" icon={props.icon} />
+        <Icon
+          className="cursor-pointer"
+          style={{ fontSize: 18, color: '#666666' }}
+          icon={props.icon}
+        />
       </Popover>
     );
   });

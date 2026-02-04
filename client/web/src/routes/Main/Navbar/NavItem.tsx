@@ -38,13 +38,15 @@ export const NavbarNavItem: React.FC<
     >
       <div
         className={clsx(
-          'w-12 h-12 hover:rounded-lg transition-all duration-300 cursor-pointer flex items-center justify-center overflow-hidden',
-          className,
-          {
-            'rounded-1/2': !isActive,
-            'rounded-lg': isActive,
-          }
+          'transition-all duration-300 cursor-pointer flex items-center justify-center overflow-hidden',
+          className
         )}
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: 22,
+          backgroundColor: isActive ? undefined : '#2D2D2D',
+        }}
         onClick={handleClick}
         data-testid={props['data-testid']}
       >
@@ -55,27 +57,26 @@ export const NavbarNavItem: React.FC<
 
   if (badge === true) {
     inner = (
-      <Badge status="error" dot={true} offset={[0, 44]} {...props.badgeProps}>
+      <Badge status="error" dot={true} offset={[0, 40]} {...props.badgeProps}>
         {inner}
       </Badge>
     );
   }
 
   return (
-    <div className="px-3 relative group">
-      {showPill && (
+    <div className="relative group flex justify-center">
+      {showPill && isActive && (
         <div
-          className="absolute w-2 left-0 top-0 bottom-0 flex items-center"
-          style={{ marginLeft: -4 }}
+          className="absolute left-0 top-0 bottom-0 flex items-center"
+          style={{ marginLeft: 0 }}
         >
           <span
-            className={clsx(
-              'bg-gray-400 dark:bg-white w-2 h-2 rounded transition-all duration-300',
-              {
-                'h-2 group-hover:h-5': !isActive,
-                'h-10': isActive,
-              }
-            )}
+            className="rounded-r transition-all duration-300"
+            style={{
+              backgroundColor: '#FF6B35',
+              width: 3,
+              height: 32,
+            }}
           />
         </div>
       )}

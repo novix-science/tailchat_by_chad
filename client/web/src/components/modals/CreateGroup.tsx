@@ -1,5 +1,5 @@
-import { Button, Divider, Input, Typography } from 'antd';
-import React, { Fragment, useCallback, useRef, useState } from 'react';
+import { Input } from 'antd';
+import React, { useState } from 'react';
 import {
   createGroup,
   GroupPanelType,
@@ -10,169 +10,148 @@ import {
 } from 'tailchat-shared';
 import type { GroupPanel } from 'tailchat-shared';
 import { closeModal, ModalWrapper } from '../Modal';
-import { Slides, SlidesRef } from '../Slides';
 import { useNavigate } from 'react-router';
 import { applyDefaultFallbackGroupPermission } from 'tailchat-shared';
-import { Avatar } from 'tailchat-design';
 
-const panelTemplate: {
-  key: string;
-  label: string;
-  panels: GroupPanel[];
-}[] = [
+const defaultPanels: GroupPanel[] = [
   {
-    key: 'default',
-    label: t('默认群组'),
-    panels: [
-      {
-        id: '00',
-        name: t('文字频道'),
-        type: GroupPanelType.GROUP,
-      },
-      {
-        id: '01',
-        name: t('大厅'),
-        parentId: '00',
-        type: GroupPanelType.TEXT,
-      },
-    ],
+    id: '00',
+    name: t('文字频道'),
+    type: GroupPanelType.GROUP,
   },
   {
-    key: 'work',
-    label: t('工作协同'),
-    panels: [
-      {
-        id: '00',
-        name: t('公共'),
-        type: GroupPanelType.GROUP,
-      },
-      {
-        id: '01',
-        name: t('全员'),
-        parentId: '00',
-        type: GroupPanelType.TEXT,
-      },
-      {
-        id: '10',
-        name: t('临时会议'),
-        type: GroupPanelType.GROUP,
-      },
-      {
-        id: '11',
-        name: t('会议室') + '1',
-        parentId: '10',
-        type: GroupPanelType.TEXT,
-      },
-      {
-        id: '11',
-        name: t('会议室') + '2',
-        parentId: '10',
-        type: GroupPanelType.TEXT,
-      },
-    ],
+    id: '01',
+    name: t('大厅'),
+    parentId: '00',
+    type: GroupPanelType.TEXT,
   },
 ];
 
 export const ModalCreateGroup: React.FC = React.memo(() => {
-  const slidesRef = useRef<SlidesRef>(null);
-  const [panels, setPanels] = useState<GroupPanel[]>([]);
   const [name, setName] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleSelectTemplate = useCallback((panels: GroupPanel[]) => {
-    setPanels(panels);
-    slidesRef.current?.next();
-  }, []);
-
-  const handleBack = useCallback(() => {
-    slidesRef.current?.prev();
-  }, []);
-
   const [{ loading }, handleCreate] = useAsyncRequest(async () => {
-    const data = await createGroup(name, panels);
+    const data = await createGroup(name, defaultPanels);
 
     dispatch(groupActions.appendGroups([data]));
 
-    navigate(`/main/group/${data._id}`); // 创建完成后跳转到新建的群组
+    navigate(`/main/group/${data._id}`);
 
-    // 应用默认权限
     await applyDefaultFallbackGroupPermission(String(data._id));
 
     closeModal();
-  }, [name, panels, location]);
+  }, [name, location]);
 
   return (
-    <ModalWrapper style={{ maxWidth: 440 }}>
-      <Slides ref={slidesRef}>
-        <div>
-          <Typography.Title level={4} className="text-center mb-4">
+    <ModalWrapper style={{ maxWidth: 480 }}>
+      <div
+        style={{
+          backgroundColor: '#1A1A1A',
+          borderRadius: 8,
+          padding: '32px 32px 24px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 24,
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: 'Oswald, sans-serif',
+              fontSize: 20,
+              fontWeight: 700,
+              color: '#FFFFFF',
+              letterSpacing: 2,
+              margin: 0,
+              textTransform: 'uppercase',
+            }}
+          >
             {t('创建群组')}
-          </Typography.Title>
-
-          <Typography.Paragraph className="mb-4 text-center">
-            {t('选择以下模板, 开始创建属于自己的群组吧!')}
-          </Typography.Paragraph>
-
-          <div className="space-y-2.5">
-            {panelTemplate.map((template, index) => (
-              <Fragment key={template.key}>
-                {/* Hardcode: 将第一个模板与之后的模板区分开 */}
-                {index === 1 && <Divider />}
-                <div
-                  key={template.key}
-                  className="w-full border rounded text-base py-2 px-3 cursor-pointer font-bold hover:bg-white hover:bg-opacity-10"
-                  onClick={() => handleSelectTemplate(template.panels)}
-                >
-                  {template.label}
-                </div>
-              </Fragment>
-            ))}
-          </div>
+          </h2>
         </div>
 
-        <div>
-          <Typography.Title level={4} className="text-center mb-4">
-            {t('自定义你的群组')}
-          </Typography.Title>
-
-          <Typography.Paragraph className="text-center mb-2">
-            {t('不要担心, 在此之后你可以随时进行变更')}
-          </Typography.Paragraph>
-
-          <div className="text-center mb-2">
-            {/* TODO: upload avatar */}
-            <Avatar className="mx-auto" size={80} name={name} />
-          </div>
-
-          <div>
-            <div>{t('群组名称')}:</div>
-
-            <Input
-              className="shadow-none"
-              size="large"
-              maxLength={100}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-          <Divider />
-
-          <div className="flex justify-between">
-            <Button
-              type="link"
-              onClick={handleBack}
-              className="text-gray-600 dark:text-white font-bold"
-            >
-              {t('返回')}
-            </Button>
-            <Button type="primary" loading={loading} onClick={handleCreate}>
-              {t('确认创建')}
-            </Button>
-          </div>
+        <div
+          style={{
+            marginBottom: 8,
+            color: '#444444',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 11,
+            letterSpacing: 1,
+          }}
+        >
+          {'// create_group'}
         </div>
-      </Slides>
+
+        <div style={{ marginBottom: 24 }}>
+          <div
+            style={{
+              marginBottom: 8,
+              color: '#666666',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 12,
+            }}
+          >
+            {t('群组名称')}
+          </div>
+          <Input
+            size="large"
+            maxLength={100}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder={t('输入群组名称')}
+            style={{
+              backgroundColor: '#0D0D0D',
+              border: '1px solid #3D3D3D',
+              borderRadius: 4,
+              color: '#FFFFFF',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 13,
+            }}
+          />
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+          <button
+            onClick={() => closeModal()}
+            style={{
+              padding: '10px 24px',
+              backgroundColor: 'transparent',
+              border: '1px solid #3D3D3D',
+              borderRadius: 4,
+              color: '#666666',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 12,
+              cursor: 'pointer',
+            }}
+          >
+            {t('取消')}
+          </button>
+          <button
+            onClick={handleCreate}
+            disabled={loading || !name.trim()}
+            style={{
+              padding: '10px 24px',
+              backgroundColor: '#FF6B35',
+              border: 'none',
+              borderRadius: 4,
+              color: '#FFFFFF',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: loading || !name.trim() ? 'not-allowed' : 'pointer',
+              opacity: loading || !name.trim() ? 0.5 : 1,
+            }}
+          >
+            {loading ? t('创建中...') : t('下一步')}
+          </button>
+        </div>
+      </div>
     </ModalWrapper>
   );
 });

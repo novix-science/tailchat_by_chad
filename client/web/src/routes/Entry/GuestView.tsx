@@ -2,7 +2,6 @@ import { Spinner } from '@/components/Spinner';
 import { useSearchParam } from '@/hooks/useSearchParam';
 import { setUserJWT } from '@/utils/jwt-helper';
 import { setGlobalUserLoginInfo } from '@/utils/user-helper';
-import { Icon } from 'tailchat-design';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
@@ -14,8 +13,6 @@ import {
 import { string } from 'yup';
 import { useNavToView } from './utils';
 import { EntryInput } from './components/Input';
-import { PrimaryBtn } from './components/PrimaryBtn';
-import { SecondaryBtn } from './components/SecondaryBtn';
 
 export const GuestView: React.FC = React.memo(() => {
   const navigate = useNavigate();
@@ -39,33 +36,104 @@ export const GuestView: React.FC = React.memo(() => {
   }, [nickname, navigate, navRedirect]);
 
   return (
-    <div className="w-96 text-white">
-      <div className="mb-4 text-2xl">{t('创建访客')}</div>
-
-      <div>
-        <div className="mb-4">
-          <div className="mb-2">{t('昵称')}</div>
-          <EntryInput
-            placeholder={t('想要让大家如何称呼你')}
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-          />
-        </div>
-
-        <PrimaryBtn loading={loading} onClick={handleCreateTemporaryUser}>
-          {t('立即进入')}
-        </PrimaryBtn>
-
-        <SecondaryBtn
-          className="text-left"
-          disabled={loading}
-          onClick={() => navToView('/entry/login')}
-        >
-          <Icon icon="mdi:arrow-left" className="mr-1 inline" />
-          {t('返回登录')}
-        </SecondaryBtn>
+    <div style={{ width: 400 }}>
+      <div
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 11,
+          color: '#444444',
+          letterSpacing: 1,
+          marginBottom: 8,
+        }}
+      >
+        {'// GUEST_ACCESS'}
       </div>
+
+      <h2
+        style={{
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: 28,
+          fontWeight: 700,
+          color: '#FFFFFF',
+          letterSpacing: 2,
+          textTransform: 'uppercase',
+          margin: '0 0 8px 0',
+        }}
+      >
+        {t('CREATE GUEST')}
+      </h2>
+
+      <p
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 11,
+          color: '#666666',
+          marginBottom: 32,
+        }}
+      >
+        {t('Enter a nickname to begin as a guest')}
+      </p>
+
+      <div style={{ marginBottom: 24 }}>
+        <div
+          style={{
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 11,
+            color: '#666666',
+            marginBottom: 8,
+            letterSpacing: 0.5,
+          }}
+        >
+          {'// nickname'}
+        </div>
+        <EntryInput
+          placeholder={t('Enter your call sign')}
+          type="text"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+        />
+      </div>
+
+      <button
+        onClick={handleCreateTemporaryUser}
+        disabled={loading || !nickname.trim()}
+        style={{
+          width: '100%',
+          padding: '14px 24px',
+          backgroundColor: '#FF6B35',
+          border: 'none',
+          borderRadius: 4,
+          color: '#FFFFFF',
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 13,
+          fontWeight: 600,
+          cursor: loading || !nickname.trim() ? 'not-allowed' : 'pointer',
+          opacity: loading || !nickname.trim() ? 0.5 : 1,
+          marginBottom: 12,
+          letterSpacing: 1,
+        }}
+      >
+        {loading ? <Spinner /> : null}
+        {'enter_room()'}
+      </button>
+
+      <button
+        onClick={() => navToView('/entry/login')}
+        disabled={loading}
+        style={{
+          width: '100%',
+          padding: '12px 24px',
+          backgroundColor: 'transparent',
+          border: '1px solid #3D3D3D',
+          borderRadius: 4,
+          color: '#666666',
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 12,
+          cursor: 'pointer',
+        }}
+      >
+        {'← back_to_login()'}
+      </button>
     </div>
   );
 });

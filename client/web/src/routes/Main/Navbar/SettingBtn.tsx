@@ -9,11 +9,21 @@ export const SettingBtn: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <Icon
-      className="text-3xl text-gray-600 dark:text-white cursor-pointer"
-      icon="mdi:dots-horizontal"
+    <div
+      style={{
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        border: '1px solid #3D3D3D',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+      }}
       onClick={handleClick}
-    />
+    >
+      <Icon className="text-xl" style={{ color: '#666666' }} icon="mdi:cog" />
+    </div>
   );
 });
 SettingBtn.displayName = 'SettingBtn';

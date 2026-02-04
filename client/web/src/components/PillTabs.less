@@ -1,36 +1,44 @@
 .pill-tabs.ant-tabs.ant-tabs-card {
-  @apply text-gray-700 dark:text-gray-100 max-h-full;
+  color: #374151; // text-gray-700
+  max-height: 100%; // max-h-full
 
   .ant-tabs-nav {
-    @apply px-2 py-3 m-0 text-base;
+    padding: 0.75rem 0.5rem; // px-2 py-3
+    margin: 0; // m-0
+    font-size: 1rem; // text-base
+    line-height: 1.5rem;
 
     &::before {
-      @apply border-0;
+      border: 0; // border-0
     }
 
     .ant-tabs-tab {
       border: 0;
       margin: 2px;
       padding: 2px 8px;
-      @apply text-gray-800 dark:text-gray-200 bg-black bg-opacity-0 dark:bg-white dark:bg-opacity-0;
+      color: #1f2937; // text-gray-800
+      background-color: rgba(0, 0, 0, 0); // bg-black bg-opacity-0
 
       &:not(.ant-tabs-tab-disabled) {
         &.ant-tabs-tab-active,
         &:hover,
         &:active {
-          @apply rounded bg-opacity-20;
+          border-radius: 0.25rem; // rounded
+          background-color: rgba(0, 0, 0, 0.2); // bg-opacity-20
 
           .ant-tabs-tab-btn {
-            @apply text-black dark:text-white;
+            color: #000000; // text-black
           }
         }
       }
 
       &.ant-tabs-tab-disabled {
-        @apply text-opacity-50;
+        opacity: 0.5; // text-opacity-50
 
         &.ant-tabs-tab-active {
-          @apply text-red-500 rounded bg-opacity-20 bg-red-500;
+          color: #ef4444; // text-red-500
+          border-radius: 0.25rem; // rounded
+          background-color: rgba(239, 68, 68, 0.2); // bg-opacity-20 bg-red-500
         }
       }
 
@@ -49,6 +57,32 @@
 
       .ant-tabs-tabpane {
         height: 100%;
+      }
+    }
+  }
+}
+
+// Dark mode overrides
+.dark {
+  .pill-tabs.ant-tabs.ant-tabs-card {
+    color: #f3f4f6; // dark:text-gray-100
+
+    .ant-tabs-nav {
+      .ant-tabs-tab {
+        color: #e5e7eb; // dark:text-gray-200
+        background-color: rgba(255, 255, 255, 0); // dark:bg-white dark:bg-opacity-0
+
+        &:not(.ant-tabs-tab-disabled) {
+          &.ant-tabs-tab-active,
+          &:hover,
+          &:active {
+            background-color: rgba(255, 255, 255, 0.2);
+
+            .ant-tabs-tab-btn {
+              color: #ffffff; // dark:text-white
+            }
+          }
+        }
       }
     }
   }

@@ -96,8 +96,14 @@ export const Modal: React.FC<ModalProps> = React.memo((props) => {
         <ModalContext.Provider value={{ closeModal }}>
           {/* Inner */}
           <div
-            className="modal-inner bg-content-light dark:bg-content-dark rounded overflow-auto relative z-10"
-            style={{ maxHeight: '80vh', maxWidth: '80vw' }}
+            className="modal-inner overflow-auto relative z-10"
+            style={{
+              maxHeight: '80vh',
+              maxWidth: '80vw',
+              backgroundColor: '#1A1A1A',
+              border: '1px solid #3D3D3D',
+              borderRadius: 8,
+            }}
             onClick={stopPropagation}
             data-tc-role="modal"
           >
@@ -259,15 +265,30 @@ export const ModalWrapper: React.FC<
   const isMobile = useIsMobile();
 
   const title = _isString(props.title) ? (
-    <Typography.Title level={4} className="text-center mb-4">
+    <h2
+      style={{
+        fontFamily: 'Oswald, sans-serif',
+        fontSize: 20,
+        fontWeight: 700,
+        color: '#FFFFFF',
+        letterSpacing: 2,
+        textTransform: 'uppercase',
+        margin: '0 0 24px 0',
+        textAlign: 'center',
+      }}
+    >
       {props.title}
-    </Typography.Title>
+    </h2>
   ) : null;
 
   return (
     <div
-      className={clsx('tc-modal', 'p-4', props.className)}
-      style={{ minWidth: isMobile ? 290 : 420, ...props.style }}
+      className={clsx('tc-modal', props.className)}
+      style={{
+        minWidth: isMobile ? 290 : 420,
+        padding: '32px 32px 24px',
+        ...props.style,
+      }}
     >
       {title}
       {props.children}

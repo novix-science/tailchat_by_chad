@@ -18,9 +18,8 @@ import { setGlobalUserLoginInfo } from '../../utils/user-helper';
 import { useSearchParam } from '@/hooks/useSearchParam';
 import { useNavToView } from './utils';
 import { EntryInput } from './components/Input';
-import { SecondaryBtn } from './components/SecondaryBtn';
-import { PrimaryBtn } from './components/PrimaryBtn';
 import { TipIcon } from '@/components/TipIcon';
+import { Spinner } from '@/components/Spinner';
 
 /**
  * 注册视图
@@ -81,12 +80,46 @@ export const RegisterView: React.FC = React.memo(() => {
   const navToView = useNavToView();
 
   return (
-    <div className="w-96 text-white">
-      <div className="mb-4 text-2xl">{t('注册账号')}</div>
+    <div style={{ width: 400 }}>
+      <div
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 11,
+          color: '#444444',
+          letterSpacing: 1,
+          marginBottom: 8,
+        }}
+      >
+        {'// REGISTER_ACCOUNT'}
+      </div>
+
+      <h2
+        style={{
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: 28,
+          fontWeight: 700,
+          color: '#FFFFFF',
+          letterSpacing: 2,
+          textTransform: 'uppercase',
+          margin: '0 0 32px 0',
+        }}
+      >
+        {t('SIGN UP')}
+      </h2>
 
       <div>
-        <div className="mb-4">
-          <div className="mb-2">{t('邮箱')}</div>
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 11,
+              color: '#666666',
+              marginBottom: 8,
+              letterSpacing: 0.5,
+            }}
+          >
+            {'// email'}
+          </div>
           <EntryInput
             name="reg-email"
             placeholder="name@example.com"
@@ -99,13 +132,42 @@ export const RegisterView: React.FC = React.memo(() => {
         {getGlobalConfig().emailVerification && (
           <>
             {!sendedEmail && (
-              <PrimaryBtn loading={sendEmailLoading} onClick={handleSendEmail}>
+              <button
+                onClick={handleSendEmail}
+                disabled={sendEmailLoading}
+                style={{
+                  width: '100%',
+                  padding: '14px 24px',
+                  backgroundColor: '#FF6B35',
+                  border: 'none',
+                  borderRadius: 4,
+                  color: '#FFFFFF',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: sendEmailLoading ? 'not-allowed' : 'pointer',
+                  opacity: sendEmailLoading ? 0.5 : 1,
+                  marginBottom: 16,
+                  letterSpacing: 1,
+                }}
+              >
+                {sendEmailLoading ? <Spinner /> : null}
                 {t('向邮箱发送校验码')}
-              </PrimaryBtn>
+              </button>
             )}
 
-            <div className="mb-4">
-              <div className="mb-2">{t('邮箱校验码')}</div>
+            <div style={{ marginBottom: 20 }}>
+              <div
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 11,
+                  color: '#666666',
+                  marginBottom: 8,
+                  letterSpacing: 0.5,
+                }}
+              >
+                {'// emailOTP'}
+              </div>
               <EntryInput
                 name="reg-email-otp"
                 type="text"
@@ -117,9 +179,19 @@ export const RegisterView: React.FC = React.memo(() => {
           </>
         )}
 
-        <div className="mb-4 relative">
-          <div className="mb-2 flex items-center">
-            <span className="mr-1">{t('昵称')}</span>
+        <div style={{ marginBottom: 20, position: 'relative' }}>
+          <div
+            style={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 11,
+              color: '#666666',
+              marginBottom: 8,
+              letterSpacing: 0.5,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ marginRight: 4 }}>{'// username'}</span>
             <TipIcon content={t('后续在用户设置中可以随时修改')} />
           </div>
           <EntryInput
@@ -131,7 +203,15 @@ export const RegisterView: React.FC = React.memo(() => {
           />
 
           <Icon
-            className="absolute bottom-1 right-1 w-8 h-8 p-2 rounded cursor-pointer bg-opacity-20 bg-black z-10"
+            className="absolute right-2 cursor-pointer z-10"
+            style={{
+              bottom: 10,
+              width: 28,
+              height: 28,
+              padding: 6,
+              borderRadius: 4,
+              color: '#666666',
+            }}
             icon={customNickname ? 'mdi:pencil-off' : 'mdi:pencil'}
             onClick={() =>
               setCustomNickname((customNickname) => !customNickname)
@@ -139,8 +219,18 @@ export const RegisterView: React.FC = React.memo(() => {
           />
         </div>
 
-        <div className="mb-4">
-          <div className="mb-2">{t('密码')}</div>
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 11,
+              color: '#666666',
+              marginBottom: 8,
+              letterSpacing: 0.5,
+            }}
+          >
+            {'// password'}
+          </div>
           <EntryInput
             name="reg-password"
             type="password"
@@ -150,20 +240,59 @@ export const RegisterView: React.FC = React.memo(() => {
           />
         </div>
 
-        {error && <p className="text-red-500 text-sm mb-4">{error.message}</p>}
+        {error && (
+          <p
+            style={{
+              color: '#FF4444',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 12,
+              marginBottom: 16,
+            }}
+          >
+            {error.message}
+          </p>
+        )}
 
-        <PrimaryBtn loading={loading} onClick={handleRegister}>
-          {t('注册账号')}
-        </PrimaryBtn>
-
-        <SecondaryBtn
-          className="text-left"
+        <button
+          onClick={handleRegister}
           disabled={loading}
-          onClick={() => navToView('/entry/login')}
+          style={{
+            width: '100%',
+            padding: '14px 24px',
+            backgroundColor: '#FF6B35',
+            border: 'none',
+            borderRadius: 4,
+            color: '#FFFFFF',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.5 : 1,
+            marginBottom: 12,
+            letterSpacing: 1,
+          }}
         >
-          <Icon icon="mdi:arrow-left" className="mr-1 inline" />
-          {t('返回登录')}
-        </SecondaryBtn>
+          {loading ? <Spinner /> : null}
+          {'register()'}
+        </button>
+
+        <button
+          onClick={() => navToView('/entry/login')}
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '12px 24px',
+            backgroundColor: 'transparent',
+            border: '1px solid #3D3D3D',
+            borderRadius: 4,
+            color: '#666666',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 12,
+            cursor: 'pointer',
+          }}
+        >
+          {'← back_to_login()'}
+        </button>
       </div>
     </div>
   );

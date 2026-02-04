@@ -1,4 +1,3 @@
-import { Icon } from 'tailchat-design';
 import {
   forgetPassword,
   resetPassword,
@@ -10,11 +9,10 @@ import React, { useState } from 'react';
 import { string } from 'yup';
 import { useNavToView } from './utils';
 import { EntryInput } from './components/Input';
-import { SecondaryBtn } from './components/SecondaryBtn';
-import { PrimaryBtn } from './components/PrimaryBtn';
+import { Spinner } from '@/components/Spinner';
 
 /**
- * 登录视图
+ * 忘记密码视图
  */
 export const ForgetPasswordView: React.FC = React.memo(() => {
   const [email, setEmail] = useState('');
@@ -51,12 +49,86 @@ export const ForgetPasswordView: React.FC = React.memo(() => {
   }, [email, password, otp, navToView]);
 
   return (
-    <div className="w-96 text-white">
-      <div className="mb-4 text-2xl">{t('忘记密码')}</div>
+    <div style={{ width: 400, textAlign: 'center' }}>
+      {/* Key icon */}
+      <div
+        style={{
+          width: 64,
+          height: 64,
+          borderRadius: '50%',
+          border: '2px solid #3D3D3D',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 auto 24px',
+        }}
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#FF6B35"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+        </svg>
+      </div>
 
-      <div>
-        <div className="mb-4">
-          <div className="mb-2">{t('邮箱')}</div>
+      <div
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 11,
+          color: '#444444',
+          letterSpacing: 1,
+          marginBottom: 8,
+        }}
+      >
+        {'// RESET_PASSWORD'}
+      </div>
+
+      <h2
+        style={{
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: 28,
+          fontWeight: 700,
+          color: '#FFFFFF',
+          letterSpacing: 2,
+          textTransform: 'uppercase',
+          margin: '0 0 8px 0',
+        }}
+      >
+        {t('ENTER OTP')}
+      </h2>
+
+      <p
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 11,
+          color: '#666666',
+          marginBottom: 32,
+        }}
+      >
+        {sendedEmail
+          ? t('A 6-digit code has been sent to your email.')
+          : t('Enter your email to receive a reset code.')}
+      </p>
+
+      <div style={{ textAlign: 'left' }}>
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 11,
+              color: '#666666',
+              marginBottom: 8,
+              letterSpacing: 0.5,
+            }}
+          >
+            {'// email'}
+          </div>
           <EntryInput
             name="forget-email"
             placeholder="name@example.com"
@@ -68,15 +140,45 @@ export const ForgetPasswordView: React.FC = React.memo(() => {
         </div>
 
         {!sendedEmail && (
-          <PrimaryBtn loading={sendEmailLoading} onClick={handleSendEmail}>
-            {t('向邮箱发送OTP')}
-          </PrimaryBtn>
+          <button
+            onClick={handleSendEmail}
+            disabled={sendEmailLoading || !email.trim()}
+            style={{
+              width: '100%',
+              padding: '14px 24px',
+              backgroundColor: '#FF6B35',
+              border: 'none',
+              borderRadius: 4,
+              color: '#FFFFFF',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 13,
+              fontWeight: 600,
+              cursor:
+                sendEmailLoading || !email.trim() ? 'not-allowed' : 'pointer',
+              opacity: sendEmailLoading || !email.trim() ? 0.5 : 1,
+              marginBottom: 12,
+              letterSpacing: 1,
+            }}
+          >
+            {sendEmailLoading ? <Spinner /> : null}
+            {t('send_otp()')}
+          </button>
         )}
 
         {sendedEmail && (
           <>
-            <div className="mb-4">
-              <div className="mb-2">{t('OTP')}</div>
+            <div style={{ marginBottom: 20 }}>
+              <div
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 11,
+                  color: '#666666',
+                  marginBottom: 8,
+                  letterSpacing: 0.5,
+                }}
+              >
+                {'// otp_code'}
+              </div>
               <EntryInput
                 name="forget-otp"
                 type="text"
@@ -85,8 +187,18 @@ export const ForgetPasswordView: React.FC = React.memo(() => {
               />
             </div>
 
-            <div className="mb-4">
-              <div className="mb-2">{t('新密码')}</div>
+            <div style={{ marginBottom: 20 }}>
+              <div
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 11,
+                  color: '#666666',
+                  marginBottom: 8,
+                  letterSpacing: 0.5,
+                }}
+              >
+                {'// new_password'}
+              </div>
               <EntryInput
                 name="forget-password"
                 type="password"
@@ -96,19 +208,48 @@ export const ForgetPasswordView: React.FC = React.memo(() => {
               />
             </div>
 
-            <PrimaryBtn loading={loading} onClick={handleResetPassword}>
-              {t('重设密码')}
-            </PrimaryBtn>
+            <button
+              onClick={handleResetPassword}
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '14px 24px',
+                backgroundColor: '#FF6B35',
+                border: 'none',
+                borderRadius: 4,
+                color: '#FFFFFF',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading ? 0.5 : 1,
+                marginBottom: 12,
+                letterSpacing: 1,
+              }}
+            >
+              {loading ? <Spinner /> : null}
+              {'reset_password()'}
+            </button>
           </>
         )}
 
-        <SecondaryBtn
-          disabled={loading}
+        <button
           onClick={() => navToView('/entry/login')}
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '12px 24px',
+            backgroundColor: 'transparent',
+            border: '1px solid #3D3D3D',
+            borderRadius: 4,
+            color: '#666666',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 12,
+            cursor: 'pointer',
+          }}
         >
-          <Icon icon="mdi:arrow-left" className="mr-1 inline" />
-          {t('返回登录')}
-        </SecondaryBtn>
+          {'← back_to_login()'}
+        </button>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { Icon } from 'tailchat-design';
 import {
   isValidStr,
   loginWithEmail,
@@ -18,9 +17,8 @@ import { openModal } from '@/components/Modal';
 import { ServiceUrlSettings } from '@/components/modals/ServiceUrlSettings';
 import { LanguageSelect } from '@/components/LanguageSelect';
 import { EntryInput } from './components/Input';
-import { SecondaryBtn } from './components/SecondaryBtn';
-import { PrimaryBtn } from './components/PrimaryBtn';
 import { pluginLoginAction } from '@/plugin/common';
+import { Spinner } from '@/components/Spinner';
 
 /**
  * 登录视图
@@ -63,7 +61,6 @@ export const LoginView: React.FC = React.memo(() => {
     await setUserJWT(data.token);
 
     if (isValidStr(navRedirect) && navRedirect !== pathname) {
-      // 增加非当前状态判定避免循环
       navigate(decodeURIComponent(navRedirect));
     } else {
       navigate('/main');
@@ -73,16 +70,48 @@ export const LoginView: React.FC = React.memo(() => {
   const navToView = useNavToView();
 
   return (
-    <div className="w-96 text-white relative">
-      <div className="mb-4 text-2xl">
-        {t('登录 {{serverName}}', {
-          serverName: serverName || 'Tailchat',
-        })}
+    <div style={{ width: 400, position: 'relative' }}>
+      <div
+        style={{
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 11,
+          color: '#444444',
+          letterSpacing: 1,
+          marginBottom: 8,
+        }}
+      >
+        {'// LOGIN_ACCOUNT'}
       </div>
 
+      <h2
+        style={{
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: 28,
+          fontWeight: 700,
+          color: '#FFFFFF',
+          letterSpacing: 2,
+          textTransform: 'uppercase',
+          margin: '0 0 32px 0',
+        }}
+      >
+        {t('登录 {{serverName}}', {
+          serverName: serverName || 'MoChat',
+        })}
+      </h2>
+
       <div>
-        <div className="mb-4">
-          <div className="mb-2">{t('邮箱')}</div>
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 11,
+              color: '#666666',
+              marginBottom: 8,
+              letterSpacing: 0.5,
+            }}
+          >
+            {'// email'}
+          </div>
           <EntryInput
             name="login-email"
             placeholder="name@example.com"
@@ -91,8 +120,19 @@ export const LoginView: React.FC = React.memo(() => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-4">
-          <div className="mb-2">{t('密码')}</div>
+
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 11,
+              color: '#666666',
+              marginBottom: 8,
+              letterSpacing: 0.5,
+            }}
+          >
+            {'// password'}
+          </div>
           <EntryInput
             name="login-password"
             type="password"
@@ -103,10 +143,31 @@ export const LoginView: React.FC = React.memo(() => {
         </div>
 
         {loading === false && error && (
-          <div className="flex justify-between mb-4">
-            <p className="text-red-500 text-sm">{error.message}</p>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: 16,
+              alignItems: 'center',
+            }}
+          >
+            <p
+              style={{
+                color: '#FF4444',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: 12,
+                margin: 0,
+              }}
+            >
+              {error.message}
+            </p>
             <div
-              className="text-gray-200 cursor-pointer"
+              style={{
+                color: '#FF6B35',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: 12,
+                cursor: 'pointer',
+              }}
               onClick={() => navToView('/entry/forget')}
             >
               {t('忘记密码？')}
@@ -114,28 +175,69 @@ export const LoginView: React.FC = React.memo(() => {
           </div>
         )}
 
-        <PrimaryBtn loading={loading} onClick={handleLogin}>
-          {t('登录')}
-        </PrimaryBtn>
+        <button
+          onClick={handleLogin}
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '14px 24px',
+            backgroundColor: '#FF6B35',
+            border: 'none',
+            borderRadius: 4,
+            color: '#FFFFFF',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.5 : 1,
+            marginBottom: 12,
+            letterSpacing: 1,
+          }}
+        >
+          {loading ? <Spinner /> : null}
+          {'login()'}
+        </button>
 
         {!disableUserRegister && (
-          <SecondaryBtn
+          <button
             disabled={loading}
             onClick={() => navToView('/entry/register')}
+            style={{
+              width: '100%',
+              padding: '12px 24px',
+              backgroundColor: 'transparent',
+              border: '1px solid #3D3D3D',
+              borderRadius: 4,
+              color: '#666666',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 12,
+              cursor: 'pointer',
+              marginBottom: 8,
+            }}
           >
-            {t('注册账号')}
-            <Icon icon="mdi:arrow-right" className="ml-1 inline" />
-          </SecondaryBtn>
+            {t('注册账号')} {'→'}
+          </button>
         )}
 
         {!disableGuestLogin && (
-          <SecondaryBtn
+          <button
             disabled={loading}
             onClick={() => navToView('/entry/guest')}
+            style={{
+              width: '100%',
+              padding: '12px 24px',
+              backgroundColor: 'transparent',
+              border: '1px solid #3D3D3D',
+              borderRadius: 4,
+              color: '#666666',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: 12,
+              cursor: 'pointer',
+              marginBottom: 8,
+            }}
           >
-            {t('游客访问')}
-            <Icon icon="mdi:arrow-right" className="ml-1 inline" />
-          </SecondaryBtn>
+            {t('游客访问')} {'→'}
+          </button>
         )}
 
         {pluginLoginAction.map((item) => {
@@ -145,7 +247,16 @@ export const LoginView: React.FC = React.memo(() => {
         })}
       </div>
 
-      <div className="absolute bottom-4 left-0 space-x-2">
+      <div
+        style={{
+          position: 'absolute',
+          bottom: -60,
+          left: 0,
+          display: 'flex',
+          gap: 8,
+          alignItems: 'center',
+        }}
+      >
         <IconBtn
           icon="mdi:cog"
           shape="square"

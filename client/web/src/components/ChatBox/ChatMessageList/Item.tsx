@@ -86,17 +86,19 @@ export const NormalMessage: React.FC<ChatMessageItemProps> = React.memo(
 
     return (
       <div
-        className={clsx(
-          'chat-message-item flex px-2 mobile:px-0 group relative select-text text-sm',
-          {
-            'bg-black bg-opacity-10': isActionBtnActive,
-            'hover:bg-black hover:bg-opacity-5': !isActionBtnActive,
-          }
-        )}
+        className={clsx('chat-message-item flex group relative select-text', {
+          'bg-opacity-10': isActionBtnActive,
+        })}
+        style={{
+          padding: showAvatar ? '16px 24px 0 24px' : '2px 24px 0 24px',
+        }}
         data-message-id={payload._id}
       >
         {/* 头像 */}
-        <div className="w-18 mobile:w-14 flex items-start justify-center pt-0.5">
+        <div
+          style={{ width: 52, flexShrink: 0 }}
+          className="flex items-start justify-center pt-0.5"
+        >
           {showAvatar ? (
             <Popover
               content={
@@ -109,13 +111,20 @@ export const NormalMessage: React.FC<ChatMessageItemProps> = React.memo(
             >
               <Avatar
                 className="cursor-pointer"
-                size={40}
+                size={36}
                 src={userInfo.avatar}
                 name={userInfo.nickname}
               />
             </Popover>
           ) : (
-            <div className="hidden group-hover:block opacity-40">
+            <div
+              className="hidden group-hover:block"
+              style={{
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: 10,
+                color: '#444444',
+              }}
+            >
               {formatShortTime(payload.createdAt)}
             </div>
           )}
@@ -134,11 +143,25 @@ export const NormalMessage: React.FC<ChatMessageItemProps> = React.memo(
             onContextMenu={stopPropagation}
           >
             {showAvatar && (
-              <div className="flex items-center">
-                <div className="font-bold">
+              <div className="flex items-center" style={{ marginBottom: 2 }}>
+                <div
+                  style={{
+                    fontFamily: 'Oswald, sans-serif',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: '#FF6B35',
+                  }}
+                >
                   {userInfo.nickname || <span>&nbsp;</span>}
                 </div>
-                <div className="hidden group-hover:block opacity-40 ml-1 text-sm">
+                <div
+                  className="ml-2"
+                  style={{
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontSize: 10,
+                    color: '#444444',
+                  }}
+                >
                   {formatShortTime(payload.createdAt)}
                 </div>
               </div>
@@ -149,12 +172,28 @@ export const NormalMessage: React.FC<ChatMessageItemProps> = React.memo(
               maxHeight={340}
               backgroundColor="var(--tc-content-background-color)"
               showFullText={
-                <div className="inline-block rounded-full bg-white dark:bg-black opacity-80 py-2 px-3 hover:opacity-100">
+                <div
+                  className="inline-block rounded-full py-2 px-3 hover:opacity-100"
+                  style={{
+                    backgroundColor: '#2D2D2D',
+                    opacity: 0.8,
+                    color: '#CCCCCC',
+                    fontSize: 12,
+                  }}
+                >
                   {t('点击展开更多')}
                 </div>
               }
             >
-              <div className="chat-message-item_body leading-6 break-words">
+              <div
+                className="chat-message-item_body break-words"
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 12,
+                  color: '#CCCCCC',
+                  lineHeight: 1.8,
+                }}
+              >
                 <MessageQuote payload={payload} />
 
                 <span>{getMessageRender(payload.content)}</span>
@@ -189,13 +228,17 @@ export const NormalMessage: React.FC<ChatMessageItemProps> = React.memo(
         {!disableOperate && (
           <div
             className={clsx(
-              'bg-white dark:bg-black rounded absolute right-2 cursor-pointer -top-3 shadow-sm flex',
+              'rounded absolute right-6 cursor-pointer -top-3 flex',
               {
-                'opacity-0 group-hover:opacity-100 bg-opacity-80 hover:bg-opacity-100':
-                  !isActionBtnActive,
-                'opacity-100 bg-opacity-100': isActionBtnActive,
+                'opacity-0 group-hover:opacity-100': !isActionBtnActive,
+                'opacity-100': isActionBtnActive,
               }
             )}
+            style={{
+              backgroundColor: '#2D2D2D',
+              border: '1px solid #3D3D3D',
+              borderRadius: 4,
+            }}
           >
             <TcPopover
               overlayClassName="chat-message-item_action-popover"
@@ -234,7 +277,15 @@ const SystemMessage: React.FC<ChatMessageItemProps> = React.memo(
   ({ payload }) => {
     return (
       <div className="text-center">
-        <div className="bg-black bg-opacity-20 rounded inline-block py-0.5 px-2 my-1 mx-2 text-sm">
+        <div
+          className="rounded inline-block py-0.5 px-2 my-1 mx-2"
+          style={{
+            backgroundColor: '#2D2D2D',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 11,
+            color: '#666666',
+          }}
+        >
           {payload.content}
         </div>
       </div>
@@ -332,9 +383,17 @@ export function buildMessageItemRow(
   return (
     <div key={message._id}>
       {showDate && (
-        <Divider className="text-sm opacity-40 px-6 font-normal select-text">
+        <div
+          className="text-center select-text"
+          style={{
+            padding: '16px 24px 8px',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: 10,
+            color: '#444444',
+          }}
+        >
           {showMessageTime(messageCreatedAt)}
-        </Divider>
+        </div>
       )}
 
       {message.isLocal === true ? (
